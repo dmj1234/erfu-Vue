@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    .color {
+        color: rgb(252, 32, 32);
+    }
+
+    .two {
+        color: orange;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div class="color">案例一:学习差值表达式及el挂载在DOM上。</div>
+
+    <div id="app">
+        {{message}}
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello,我在DOM家'
+            }
+        })
+    </script>
+
+    <br>
+    <div class="color">案例二:指令带有v- 表示Vue提供的特殊attribute.
+        控制台输入app2.message=18</div>
+    <div id="app2">
+        <span v-bind:title="message">
+            28岁
+        </span>
+    </div>
+    <script>
+        var app2 = new Vue({
+            data: {
+                message: '页面加载于' + new Date().toLocaleString()
+            }
+        })
+    </script>
+
+    <br>
+    <div class="color">案例三：v-if指令：切换功能。如果放学想跑就在控制台输入app3.seen = false</div>
+    <div id="app3">
+        <p v-if="seen">放学别跑</p>
+    </div>
+    <script>
+        var app3 = new Vue({
+            el: '#app3',
+            data: {
+                seen: true
+            }
+        })
+    </script>
+
+    <br>
+    <div class="color">
+        案例四：v-for指令可以遍历数组，渲染我们的项目列表。如果你在控制台输入app4.todos.push=({ text:'万一实现了呢' })
+    </div>
+    <div id="app4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <script>
+        var app4 = new Vue({
+            el: '#app4',
+            data: {
+                todos: [
+                    { text: '理科选择题' },
+                    { text: '文科选择题' },
+                    { text: '一懵就全对' }
+                ]
+            }
+        })
+    </script>
+
+    <br>
+    <div class="color">案例五：通过v-on指令添加监听事件监听器。</div>
+    <div id="app5">
+        <p>
+            {{message}}
+        </p>
+        <button v-on:click="reverseMessage">我在山上打老虎</button>
+    </div>
+    <script>
+        var app5 = new Vue({
+            el: '#app5',
+            data: {
+                message: '虎老有上山说听'
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+
+    <br>
+    <div class="color">案例六：双向绑定，听说有人输错了学号被打了！那是因为他没理解，你理解了吗？</div>
+    <div id="app6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+    <script>
+        var app6 = new Vue({
+            el: '#app6',
+            data: {
+                message: '请输入学号'
+            }
+        })
+    </script>
+
+    <br>
+    <div class="two">组件化学习：一个组件本质上是一个拥有预定义选项的一个Vue实例。</div>
+    <div id="app7">
+        <todo-item></todo-item>
+    </div>
+
+    <script>
+        Vue.component('todo-item', {
+            template: `<ul>Vue.component生成组件模板,不要忘了挂载呀，不挂上去DOM怎么渲染<ul>`
+        })
+        var app7 = new Vue({
+            el: '#app7',
+
+        })
+    </script>
+
+    <br>
+    <div class="two">组件化学习：从父组件作用域将数据传到子组件上，使用prop，再使用v-bind指令将待办项传到循环输出的每个环节中。
+        Vue组件通过props属性来声明一个自己的属性，然后父组件就可以往里面传递数据。使用v-bind给元素特性(attribute)传递值时，Vue会将""中的内容当做一个表达式。
+    </div>
+    <div id="app8">
+
+        <todo-item v-for="item in groceryList" v-bind:hoppy="item" v-bind:key="item.id"></todo-item>
+
+    </div>
+    <script>
+        Vue.component('todo-item', {
+            props: ['hoppy'],
+            template: '<ul>{{ hoppy.text }}</ul>'
+        })
+
+        var app8 = new Vue({
+            el: '#app8',
+            data: {
+                groceryList: [
+                    { id: 0, text: '敲代码' },
+                    { id: 1, text: '拉小提琴' },
+                    { id: 2, text: '学习' }
+                ]
+            }
+        })
+    </script>
+    <br>
+
+    <div class="two">每个Vue应用都通过Vue函数创建一个新的Vue实例</div>
+    <div>
+        var vm(view module) = new Vue({
+        //选型，记住是选项！！！后面会一直谈到选项的。
+        })
+    </div>
+    <div>
+        Vue 实例还暴露了一些有用的实例 property 与方法。它们都有前缀 $，以便与用户定义的 property 区分开来。
+        <a href="https://zhuanlan.zhihu.com/p/345512894/edit">知乎总结Vue暴露的实例</a>
+
+    </div>
+</body>
+
+</html>
